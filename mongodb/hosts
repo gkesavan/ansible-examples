@@ -1,29 +1,49 @@
 #The site wide list of mongodb servers
+[mongo1]
+192.168.81.128
 
+[mongo1:vars]
+mongod_port=2700
+
+[mongo2]
+192.168.81.129
+
+[mongo2:vars]
+mongod_port=2701
+
+[mongo3]
+192.168.81.130
+
+[mongo3:vars]
+mongod_port=2702
 # the mongo servers need a mongod_port variable set, and they must not conflict.
-[mongo_servers]
-mongo1 mongod_port=2700
-mongo2 mongod_port=2701
-mongo3 mongod_port=2702
-mongo4 mongod_port=2703
+
+[mongo_servers:childrens]
+mongo1
+mongo2
+mongo3
+
+[mongo_servers:vars]
+ssh_user = robin
 
 #The list of servers where replication should happen, by default include all servers
-[replication_servers]
-mongo4
+[replication_servers:childrens]
 mongo3
 mongo1
 mongo2
 
+[replication_servers:vars]
+ssh_user = robin
 #The list of mongodb configuration servers, make sure it is 1 or 3
-[mongoc_servers]
+[mongoc_servers:childrens]
 mongo1
-mongo2
-mongo3
 
-
+[mongoc_servers:vars]
+ssh_user = robin
 #The list of servers where mongos servers would run. 
-[mongos_servers]
+[mongos_servers:childrens]
 mongo1
 mongo2
 
-
+[mongos_servers:vars]
+ssh_user = robin
